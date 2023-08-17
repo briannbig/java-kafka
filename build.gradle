@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'github.briannbig'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation group: 'org.slf4j', name: 'slf4j-nop', version: '2.0.3'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.3.1'
+
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}

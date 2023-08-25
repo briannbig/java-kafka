@@ -16,7 +16,7 @@ public class TrxProducer extends AbstractKafka {
 
     @Override
     protected void shutdown() throws Exception {
-        closed.set(false);
+        closed.set(true);
         getKafkaProducer().close();
     }
 
@@ -25,29 +25,16 @@ public class TrxProducer extends AbstractKafka {
         int i = 1;
         while (true) {
             i += 1;
-            System.out.println("sending message....");
-            sendMessage(i);
+
+            Transaction trx = new Transaction(getRandomString(), getRandomString(), i * 100.21);
+            ProducerRecord<String, Transaction> producerRecord = new ProducerRecord<>(topicName, "trx [" + trx.getId() + "]", trx);
+
+            getKafkaProducer().send(producerRecord);
+            System.out.println(producerRecord);
             Thread.sleep(1000);
 
         }
 
-    }
-
-    public void run(int numberOfMessages) throws Exception {
-        int i = 1;
-        while (i <= numberOfMessages) {
-            sendMessage(i);
-            i++;
-        }
-
-    }
-
-    private void sendMessage(int amount) throws Exception {
-        Transaction trx = new Transaction(getRandomString(), getRandomString(), amount * 100.21);
-        ProducerRecord<String, Transaction> producerRecord = new ProducerRecord<>(Config.getTopic(), "trx [" + trx.getId() + "]", trx);
-
-        getKafkaProducer().send(producerRecord);
-        System.out.println(producerRecord);
     }
 
     private KafkaProducer<String, Transaction> getKafkaProducer() throws Exception {
@@ -57,5 +44,12 @@ public class TrxProducer extends AbstractKafka {
         }
 
         return producer;
+    }
+
+    public static void main(String[] args) throws Exception {
+        String topicName = Config.getTopic().toString();
+        System.out.println("Starting producer....");
+        new TrxProducer().runAlways(topicName, (topic, transaction) -> {
+        });
     }
 }

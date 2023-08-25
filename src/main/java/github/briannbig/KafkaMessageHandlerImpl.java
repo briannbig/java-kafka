@@ -9,8 +9,18 @@ public class KafkaMessageHandlerImpl implements KafkaMessageHandler {
         String source = KafkaMessageHandlerImpl.class.getName();
         Transaction trx = transaction.value();
 
+        trx.setSourceAcc("cons"+trx.getSourceAcc());
+        trx.setDestAcc("cons"+trx.getDestAcc());
+        trx.setAmount(trx.getAmount()/2);
 
-        System.out.println("*** " + source + " ********>>>>> " + trx );
+        System.out.println("*** " + source + " ********>>>>> " +
+                        "Transaction{" +
+                        "id='" + trx.getId() + '\'' +
+                        "sourceAcc='" + trx.getSourceAcc() + '\'' +
+                        ", destAcc='" + trx.getDestAcc() + '\'' +
+                        ", amount=" + trx.getAmount() +
+                        '}'
+                );
 
 
 

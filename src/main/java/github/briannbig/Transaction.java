@@ -1,6 +1,8 @@
 package github.briannbig;
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable {
     private static int id = 1;
 
     private String sourceAcc;
@@ -8,12 +10,14 @@ public class Transaction {
 
     private double amount;
 
+    public Transaction(){}
+
 
     public Transaction(String sourceAcc, String destAcc, double amount) {
         this.sourceAcc = sourceAcc;
         this.destAcc = destAcc;
         this.amount = amount;
-        id += id;
+        id++;
     }
 
     public Transaction(String sourceAcc, String destAcc) {
@@ -55,7 +59,7 @@ public class Transaction {
     @Override
     public String toString() {
         return "Transaction{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 "sourceAcc='" + sourceAcc + '\'' +
                 ", destAcc='" + destAcc + '\'' +
                 ", amount=" + amount +

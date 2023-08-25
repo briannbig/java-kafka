@@ -9,7 +9,7 @@ public final class Config {
 
     public static final String BOOTSTRAP_SERVERS = "bootstrap.servers";
     public static final String DEFAULT_TOPIC = "default.topic";
-    public static final String TOPIC = "default.topic";
+    public static final String TOPIC = "app.topic";
 
     public static Properties getProperties() throws Exception {
 
